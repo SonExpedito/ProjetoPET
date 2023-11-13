@@ -55,10 +55,10 @@ public class Login extends JFrame {
         setResizable(false);
         tela.setLayout(null);
 
-        ImageIcon icone = new ImageIcon("src/imagens/logo.png"); // Substitua pelo caminho correto do ícone
+        ImageIcon icone = new ImageIcon("src/imagens/icone.png"); // Substitua pelo caminho correto do ícone
         setIconImage(icone.getImage());
 
-        ImageIcon logo = createResizedImageIcon("src/imagens/logo.png", 500, 400);
+        ImageIcon logo = createResizedImageIcon("src/imagens/logo.png", 600, 500);
         ImageIcon user = new ImageIcon("src/imagens/usuario.png");
         ImageIcon senhas = new ImageIcon("src/imagens/senha.png");
 
@@ -73,7 +73,7 @@ public class Login extends JFrame {
 
         admin.setBounds(3, 105, 220, 30);
         senha.setBounds(3, 205, 220, 30);
-        logozin.setBounds(400, 60, 400, 300);
+        logozin.setBounds(280, -30, 600, 500);
         
         rTitulo.setBounds(200, 5, 150, 100);
         rTitulo.setForeground(new Color(162, 210, 255));

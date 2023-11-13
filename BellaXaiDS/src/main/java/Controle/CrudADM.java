@@ -13,16 +13,23 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,7 +46,7 @@ public class CrudADM extends JFrame {
 
     Conexao con_cliente;
     JLabel rRegistro, rNome, rEspecie, rRaca, rCorPredo, rData, rSexo,
-            rPesquisar, rTitulo;
+            rPesquisar, rTitulo, rimagem;
     JTextField tRegistro, tNome, tEspecie, tRaca, tCorPredo, tPesquisar, tSexo;
     JFormattedTextField tData;
     JButton primeiro, anterior, proximo, ultimo, registro, gravar, alterar, excluir, pesquisar, sair;
@@ -67,6 +74,8 @@ public class CrudADM extends JFrame {
         tPesquisar = new JTextField();
         tSexo = new JTextField();
 
+        criarMenu();
+
         try {
 
             MaskFormatter mData = new MaskFormatter("####/##/##");
@@ -82,9 +91,13 @@ public class CrudADM extends JFrame {
         rTitulo.setForeground(new Color(162, 210, 255));
         rTitulo.setFont(new Font("Tahoma", Font.BOLD, 20));
 
+        ImageIcon imagemcrud = createResizedImageIcon("src/imagens/artcrud.png", 420, 320);
+        rimagem = new JLabel(imagemcrud);
+        rimagem.setBounds(480, 20, 500, 400);
+
         tela.setBackground(new Color(237, 241, 243));
 
-        ImageIcon icone = new ImageIcon("src/imagens/logo.png"); // Substitua pelo caminho correto do ícone
+        ImageIcon icone = new ImageIcon("src/imagens/icone.png"); // Substitua pelo caminho correto do ícone
         setIconImage(icone.getImage());
 
         con_cliente = new Conexao();
@@ -103,8 +116,8 @@ public class CrudADM extends JFrame {
         gravar = new JButton("Gravar");
         alterar = new JButton("Alterar");
         excluir = new JButton("Excluir");
-        pesquisar = new JButton("Pesquisar");
-        sair = new JButton("Menu");
+        pesquisar = new JButton("Pesquisar-Nome");
+        sair = new JButton("Voltar");
 
         sair.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -175,6 +188,7 @@ public class CrudADM extends JFrame {
                 tNome.setText("");
                 tRaca.setText("");
                 tSexo.setText("");
+                tData.setText("");
             }
         });
 
@@ -411,6 +425,7 @@ public class CrudADM extends JFrame {
         tela.add(tPesquisar);
         tela.add(tData);
         tela.add(rData);
+        tela.add(rimagem);
 
         ImagePanel backgroundPanel = new ImagePanel("src/imagens/backgroundcrud.png");
         tela.add(backgroundPanel);
@@ -502,10 +517,108 @@ public class CrudADM extends JFrame {
 
     }
 
+    private ImageIcon createResizedImageIcon(String imagePath, int width, int height) {
+        try {
+            BufferedImage originalImage = ImageIO.read(new File(imagePath));
+            Image resizedImage = originalImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(resizedImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static void main(String[] args) throws SQLException {
         CrudADM adm = new CrudADM();
         adm.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+    }
+
+    private void criarMenu() {
+        JMenuBar menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        JMenu menuNavegacao = new JMenu("Navegação");
+        menuBar.add(menuNavegacao);
+
+        JMenuItem primeiroItem = new JMenuItem("Primeiro");
+        JMenuItem ultimoItem = new JMenuItem("Último");
+        JMenuItem anteriorItem = new JMenuItem("Anterior");
+        JMenuItem proximoItem = new JMenuItem("Próximo");
+
+        menuNavegacao.add(primeiroItem);
+        menuNavegacao.add(anteriorItem);
+        menuNavegacao.add(proximoItem);
+        menuNavegacao.add(ultimoItem);
+
+        primeiroItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                primeiroActionPerformed();
+            }
+        });
+
+        anteriorItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                anteriorActionPerformed();
+            }
+        });
+
+        proximoItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                proximoActionPerformed();
+            }
+        });
+
+        ultimoItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ultimoActionPerformed();
+            }
+        });
+
+    }
+
+    private void primeiroActionPerformed() {
+        try {
+            con_cliente.resultset.first();
+            mostrar_Dados();
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Não foi possível acessar o primeiro registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void anteriorActionPerformed() {
+        try {
+            if (con_cliente.resultset.isFirst()) {
+                JOptionPane.showMessageDialog(null, "Ja esta no primeiro registro");
+            } else {
+                con_cliente.resultset.previous();
+                mostrar_Dados();
+            }
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel acessar o primeiro registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void proximoActionPerformed() {
+        try {
+            if (con_cliente.resultset.isLast()) {
+                JOptionPane.showMessageDialog(null, "Ja esta no ultimo registro");
+            } else {
+                con_cliente.resultset.next();
+                mostrar_Dados();
+            }
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel acessar o primeiro registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void ultimoActionPerformed() {
+        try {
+            con_cliente.resultset.last();
+            mostrar_Dados();
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Não foi possivel acessar o primeiro registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13/11/2023 às 15:33
+-- Tempo de geração: 13/11/2023 às 23:01
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.2.4
 
@@ -20,7 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `projetopet`
 --
-
+create database `projetopet`;
+use `projetopet`;
 -- --------------------------------------------------------
 
 --
@@ -61,7 +62,11 @@ CREATE TABLE `animais` (
 --
 
 INSERT INTO `animais` (`Num_Registro`, `Nome_Pet`, `Especie`, `Raca`, `Cor_Predominante`, `Data_Nasc`, `Sexo`) VALUES
-(1, 'Gojo', 'Cachorro', 'Husky Siberiano', 'Branco', '2023-11-01', 'Macho');
+(1, 'Gojo', 'Cachorro', 'Husky Siberiano', 'Branco', '2023-11-01', 'Macho'),
+(2, 'Xai', 'Gata', 'Vira Lata', 'Branca', '2020-10-20', 'Fêmea'),
+(3, 'Rafael', 'Tucano', 'Tucano-toco', 'Preto', '2019-10-02', 'Macho'),
+(4, 'Bella', 'Cachorro', 'Vira Lata', 'Morena', '2022-05-10', 'Fêmea'),
+(5, 'Felix', 'Primata', 'Mico-Leão Dourado', 'Vermelho', '2006-12-20', 'Macho');
 
 --
 -- Índices para tabelas despejadas
@@ -81,7 +86,7 @@ ALTER TABLE `animais`
 -- AUTO_INCREMENT de tabela `animais`
 --
 ALTER TABLE `animais`
-  MODIFY `Num_Registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Num_Registro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
