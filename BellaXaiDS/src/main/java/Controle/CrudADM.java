@@ -84,10 +84,9 @@ public class CrudADM extends JFrame {
 
         tela.setBackground(new Color(237, 241, 243));
 
-         ImageIcon icone = new ImageIcon("src/imagens/logo.png"); // Substitua pelo caminho correto do ícone
+        ImageIcon icone = new ImageIcon("src/imagens/logo.png"); // Substitua pelo caminho correto do ícone
         setIconImage(icone.getImage());
-        
-        
+
         con_cliente = new Conexao();
         con_cliente.conecta();
 
@@ -182,19 +181,20 @@ public class CrudADM extends JFrame {
         gravar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String nome = tNome.getText();
-                String dt = tCorPredo.getText();
-                String tel = tRaca.getText();
-                String email = tEspecie.getText();
-                String des = tSexo.getText();
+                String especie = tEspecie.getText();
+                String raca = tRaca.getText();
+                String corPredo = tCorPredo.getText();
+                String sexo = tSexo.getText();
+                String dataNasc = tData.getText();
                 try {
-                    String insert_sql = "insert into remedio(Nome_Rem,Categoria_Num,Preço,Estoque,Descrição)values('" + nome + "','" + tel + "','" + email + "','" + dt + "','" + des + "')";
+                    String insert_sql = "INSERT INTO animais (Nome_Pet, Especie, Raca, Cor_Predominante, Sexo, Data_Nasc) VALUES ('" + nome + "', '" + especie + "', '" + raca + "', '" + corPredo + "', '" + sexo + "', '" + dataNasc + "')";
                     con_cliente.statement.executeUpdate(insert_sql);
                     JOptionPane.showMessageDialog(null, "Gravado com sucesso");
 
-                    con_cliente.executaSQL("select * from animais order by Num_Registro");
+                    con_cliente.executaSQL("SELECT * FROM animais ORDER BY Num_Registro");
                     preencherTabela();
                 } catch (SQLException erro) {
-                    JOptionPane.showMessageDialog(null, "Não foi possivel gravar registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Não foi possível gravar registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });
@@ -202,25 +202,26 @@ public class CrudADM extends JFrame {
         alterar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String nome = tNome.getText();
-                String dt = tCorPredo.getText();
-                String tel = tRaca.getText();
-                String email = tEspecie.getText();
-                String des = tSexo.getText();
+                String especie = tEspecie.getText();
+                String raca = tRaca.getText();
+                String corPredo = tCorPredo.getText();
+                String sexo = tSexo.getText();
+                String dataNasc = tData.getText();
                 String sql;
                 String msg = "";
 
                 try {
                     if (tRegistro.getText().equals("")) {
-                        sql = "insert into animais(Nome_Rem,Categoria_Num,Preço,Estoque,Descrição)values('" + nome + "','" + tel + "','" + email + "','" + dt + "','" + des + "')";
+                        sql = "INSERT INTO animais (Nome_Pet, Especie, Raca, Cor_Predominante, Sexo, Data_Nasc) VALUES ('" + nome + "', '" + especie + "', '" + raca + "', '" + corPredo + "', '" + sexo + "', '" + dataNasc + "')";
                         msg = "Gravado com sucesso";
                     } else {
-                        sql = "update animais set Nome_Rem='" + nome + "',Categoria_Num='" + email + "',Preço='" + tel + "',Estoque='" + dt + "',Descrição='" + des + "'where Id_Rem=" + tRegistro.getText();
+                        sql = "UPDATE animais SET Nome_Pet='" + nome + "', Especie='" + especie + "', Raca='" + raca + "', Cor_Predominante='" + corPredo + "', Sexo='" + sexo + "', Data_Nasc='" + dataNasc + "' WHERE Num_Registro=" + tRegistro.getText();
                         msg = "Alterado com sucesso";
                     }
 
                     con_cliente.statement.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "Gravado com sucesso");
-                    con_cliente.executaSQL("select * from animais order by Num_Registro ");
+                    con_cliente.executaSQL("SELECT * FROM animais ORDER BY Num_Registro");
                     preencherTabela();
 
                 } catch (SQLException errosql) {
@@ -236,16 +237,16 @@ public class CrudADM extends JFrame {
                 try {
                     int resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja excluir?");
                     if (resposta == 0) {
-                        sql = "delete from animais where Num_Registro = " + tRegistro.getText();
+                        sql = "DELETE FROM animais WHERE Num_Registro = " + tRegistro.getText();
                         int excluir = con_cliente.statement.executeUpdate(sql);
                         if (excluir == 1) {
-                            JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-                            con_cliente.executaSQL("select * from animais order by Num_Registro");
+                            JOptionPane.showMessageDialog(null, "Excluído com sucesso");
+                            con_cliente.executaSQL("SELECT * FROM animais ORDER BY Num_Registro");
                             con_cliente.resultset.first();
                             preencherTabela();
                             posicionarRegistro();
                         } else {
-                            JOptionPane.showMessageDialog(null, "Operaçao cancelada pelo usuario");
+                            JOptionPane.showMessageDialog(null, "Operação cancelada pelo usuário");
                         }
                     }
 
@@ -258,15 +259,15 @@ public class CrudADM extends JFrame {
         pesquisar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String pesquisa = "select * from remedio where Nome_Rem like'" + tPesquisar.getText() + "%'";
+                    String pesquisa = "SELECT * FROM animais WHERE Nome_Pet LIKE '" + tPesquisar.getText() + "%'";
                     con_cliente.executaSQL(pesquisa);
                     if (con_cliente.resultset.first()) {
                         preencherTabela();
                     } else {
-                        JOptionPane.showMessageDialog(null, "\n Nao existe");
+                        JOptionPane.showMessageDialog(null, "Não existe");
                     }
                 } catch (SQLException errosql) {
-                    JOptionPane.showMessageDialog(null, "\n Dados nao encontrados");
+                    JOptionPane.showMessageDialog(null, "Dados não encontrados");
                 }
             }
         });
@@ -295,35 +296,35 @@ public class CrudADM extends JFrame {
         sair.setBounds(750, 355, 150, 30);
         tela.add(sair);
 
-        primeiro.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        primeiro.setForeground(new Color(21,21,21));
+        primeiro.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        primeiro.setForeground(new Color(21, 21, 21));
 
-        anterior.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        anterior.setForeground(new Color(21,21,21));
+        anterior.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        anterior.setForeground(new Color(21, 21, 21));
 
-        proximo.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        proximo.setForeground(new Color(21,21,21));
+        proximo.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        proximo.setForeground(new Color(21, 21, 21));
 
-        ultimo.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        ultimo.setForeground(new Color(21,21,21));
+        ultimo.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        ultimo.setForeground(new Color(21, 21, 21));
 
-        registro.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        registro.setForeground(new Color(21,21,21));
+        registro.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        registro.setForeground(new Color(21, 21, 21));
 
-        gravar.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        gravar.setForeground(new Color(21,21,21));
+        gravar.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        gravar.setForeground(new Color(21, 21, 21));
 
-        alterar.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        alterar.setForeground(new Color(21,21,21));
+        alterar.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        alterar.setForeground(new Color(21, 21, 21));
 
-        excluir.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        excluir.setForeground(new Color(21,21,21));
+        excluir.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        excluir.setForeground(new Color(21, 21, 21));
 
-        pesquisar.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        pesquisar.setForeground(new Color(21,21,21));
+        pesquisar.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        pesquisar.setForeground(new Color(21, 21, 21));
 
-        sair.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
-        sair.setForeground(new Color(21,21,21));
+        sair.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        sair.setForeground(new Color(21, 21, 21));
 
         rPesquisar.setBounds(50, 320, 200, 50);
         tPesquisar.setBounds(220, 355, 250, 30);
@@ -366,17 +367,16 @@ public class CrudADM extends JFrame {
         rRaca.setBounds(50, 160, 150, 50);
         rCorPredo.setBounds(50, 200, 150, 50);
         rSexo.setBounds(50, 240, 150, 50);
-        rData.setBounds(500,40,150,50);
-        
+        rData.setBounds(500, 40, 150, 50);
 
-        rRegistro.setForeground(new Color(21,21,21));
-        rNome.setForeground(new Color(21,21,21));
-        rEspecie.setForeground(new Color(21,21,21));
-        rRaca.setForeground(new Color(21,21,21));
-        rCorPredo.setForeground(new Color(21,21,21));
-        rPesquisar.setForeground(new Color(21,21,21));
-        rSexo.setForeground(new Color(21,21,21));
-         rData.setForeground(new Color(21,21,21));
+        rRegistro.setForeground(new Color(21, 21, 21));
+        rNome.setForeground(new Color(21, 21, 21));
+        rEspecie.setForeground(new Color(21, 21, 21));
+        rRaca.setForeground(new Color(21, 21, 21));
+        rCorPredo.setForeground(new Color(21, 21, 21));
+        rPesquisar.setForeground(new Color(21, 21, 21));
+        rSexo.setForeground(new Color(21, 21, 21));
+        rData.setForeground(new Color(21, 21, 21));
 
         rRegistro.setFont(new Font("Tahoma", Font.BOLD, 15));
         rNome.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -393,7 +393,7 @@ public class CrudADM extends JFrame {
         tRaca.setBounds(130, 170, 150, 30);
         tCorPredo.setBounds(130, 210, 80, 30);
         tSexo.setBounds(130, 250, 80, 30);
-        tData.setBounds(650,50,80,30);
+        tData.setBounds(650, 50, 80, 30);
 
         tela.add(rTitulo);
         tela.add(tEspecie);
