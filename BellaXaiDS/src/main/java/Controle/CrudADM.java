@@ -545,11 +545,13 @@ public class CrudADM extends JFrame {
         JMenuItem ultimoItem = new JMenuItem("Último");
         JMenuItem anteriorItem = new JMenuItem("Anterior");
         JMenuItem proximoItem = new JMenuItem("Próximo");
+        JMenuItem agradecimentos = new JMenuItem("Agradecimentos");
 
         menuNavegacao.add(primeiroItem);
         menuNavegacao.add(anteriorItem);
         menuNavegacao.add(proximoItem);
         menuNavegacao.add(ultimoItem);
+        menuNavegacao.add(agradecimentos);
 
         primeiroItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -575,6 +577,11 @@ public class CrudADM extends JFrame {
             }
         });
 
+        agradecimentos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                agradecimentosActionPerformed();
+            }
+        });
     }
 
     private void primeiroActionPerformed() {
@@ -619,6 +626,12 @@ public class CrudADM extends JFrame {
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(null, "Não foi possivel acessar o primeiro registro" + erro, "Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+
+    private void agradecimentosActionPerformed() {
+        agradecimento agr = new agradecimento();
+        agr.setVisible(true);
+        dispose();
     }
 
 }
