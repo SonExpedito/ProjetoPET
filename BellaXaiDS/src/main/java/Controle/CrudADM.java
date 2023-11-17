@@ -88,7 +88,7 @@ public class CrudADM extends JFrame {
 
         rTitulo = new JLabel("PET");
         rTitulo.setBounds(450, 3, 150, 50);
-        rTitulo.setForeground(new Color(86,222,192));
+        rTitulo.setForeground(new Color(162, 210, 255));
         rTitulo.setFont(new Font("Tahoma", Font.BOLD, 20));
 
         ImageIcon imagemcrud = createResizedImageIcon("src/imagens/artcrud.png", 420, 320);
@@ -310,34 +310,34 @@ public class CrudADM extends JFrame {
         sair.setBounds(750, 355, 150, 30);
         tela.add(sair);
 
-        primeiro.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        primeiro.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         primeiro.setForeground(new Color(21, 21, 21));
 
-        anterior.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        anterior.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         anterior.setForeground(new Color(21, 21, 21));
 
-        proximo.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        proximo.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         proximo.setForeground(new Color(21, 21, 21));
 
-        ultimo.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        ultimo.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         ultimo.setForeground(new Color(21, 21, 21));
 
-        registro.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        registro.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         registro.setForeground(new Color(21, 21, 21));
 
-        gravar.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        gravar.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         gravar.setForeground(new Color(21, 21, 21));
 
-        alterar.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        alterar.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         alterar.setForeground(new Color(21, 21, 21));
 
-        excluir.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        excluir.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         excluir.setForeground(new Color(21, 21, 21));
 
-        pesquisar.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        pesquisar.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         pesquisar.setForeground(new Color(21, 21, 21));
 
-        sair.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
+        sair.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
         sair.setForeground(new Color(21, 21, 21));
 
         rPesquisar.setBounds(50, 320, 200, 50);
