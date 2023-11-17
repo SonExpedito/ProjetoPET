@@ -46,7 +46,7 @@ public class agradecimento extends JFrame {
         voltar = new JButton("Voltar");
         voltar.setBounds(360, 330, 100, 30);
 
-        voltar.setBackground(new Color(162, 210, 255)); // Define a cor de fundo do botão como azul
+        voltar.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
         voltar.setForeground(new Color(21, 21, 21));
 
         voltar.addActionListener(new ActionListener() {

@@ -76,7 +76,7 @@ public class Login extends JFrame {
         logozin.setBounds(280, -30, 600, 500);
         
         rTitulo.setBounds(200, 5, 150, 100);
-        rTitulo.setForeground(new Color(162, 210, 255));
+        rTitulo.setForeground(new Color(86,222,192));
         rTitulo.setFont(new Font("Tahoma", Font.BOLD, 30));
 
         Usuario.setBounds(130, 105, 220, 30);
@@ -85,7 +85,7 @@ public class Login extends JFrame {
         Senha.setBackground(new Color(255,200,221));
         
         logar.setBounds(165, 305, 150, 30);
-        logar.setBackground(new Color(162,210,255)); // Define a cor de fundo do botão como azul
+        logar.setBackground(new Color(86,222,192)); // Define a cor de fundo do botão como azul
         logar.setForeground(new Color(21,21,21));
         
         logar.addActionListener(new ActionListener() {
